@@ -5,7 +5,7 @@
 # part independently. Then, the model can be reused in other environments as well.
 # *********************************************************************************
 
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_val_score, GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
@@ -15,10 +15,9 @@ prefix = "../ml/"
 
 
 class AnomalyModel:
-    def __init__(self, benign_path, anomaly_path, model_path):
+    def __init__(self):
         self.clear_state()
-        self.set_model_paths(benign_path, anomaly_path, model_path)
-        self.set_data_dfs()
+        # self.set_model_paths(benign_path, anomaly_path, model_path)
 
     def clear_state(self):
         """
@@ -39,27 +38,42 @@ class AnomalyModel:
         self.anomaly_path = anomaly_path
         self.model_path = model_path
 
-    def set_data_dfs(self):
-        benign = pd.read_csv(self.benign_path)
-        anomaly = pd.read_csv(self.anomaly_path)
-
-        self.df = pd.concat([benign, anomaly])
-        print(self.df)
-        self.clf_X = self.df.drop(["label"], axis=1)
-        self.clf_y = np.array(self.df["label"])
-
-    def build_models(self):
+    def build_models(self, X_train, y_train):
         """
         This function builds the models based on
         the classifier matrix and labels.
         :return:
         """
-        self.cls = RandomForestClassifier(n_estimators=100, max_features=0.2)
 
-        # build classifier
-        self.cls.fit(self.clf_X, self.clf_y)
+        grid = {
+            "n_estimators": [200, 300, 400, 500],
+            "max_features": ["sqrt", "log2"],
+            "max_depth": [4, 5, 6, 7, 8],
+            "criterion": ["gini", "entropy"],
+            "random_state": [18],
+        }
 
-        return self.cls
+        self.rf_cv = GridSearchCV(
+            estimator=RandomForestClassifier(), param_grid=grid, cv=3
+        )
+        self.rf_cv.fit(X_train, y_train)
+
+        # Hyper
+        n_estimators = self.rf_cv.best_params_["n_estimators"]
+        max_depth = self.rf_cv.best_params_["max_depth"]
+        max_features = self.rf_cv.best_params_["max_features"]
+        random_state = self.rf_cv.best_params_["random_state"]
+        criterion = self.rf_cv.best_params_["criterion"]
+
+        self.rf2 = RandomForestClassifier(
+            n_estimators=n_estimators,
+            max_depth=max_depth,
+            max_features=max_features,
+            random_state=random_state,
+            criterion=criterion,
+        ).fit(X_train, y_train)
+
+        return self
 
     def adb_evaluate_model(self):
         """
