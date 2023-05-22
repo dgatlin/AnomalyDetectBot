@@ -5,8 +5,8 @@ import joblib
 import pandas as pd
 from sklearn.pipeline import Pipeline
 
-from container.anomaly_model import __version__ as _version
-from container.anomaly_model.anomaly_model.config.core import (
+from container.model_package import __version__ as _version
+from container.model_package.anomaly_model.config.core import (
     DATASET_DIR,
     TRAINED_MODEL_DIR,
     config,

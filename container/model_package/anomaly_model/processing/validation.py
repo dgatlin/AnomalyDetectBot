@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from pydantic import BaseModel, ValidationError
 
-from container.anomaly_model import config
+from container.model_package import config
 
 
 def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:

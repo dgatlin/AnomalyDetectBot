@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Sequence
 from pydantic import BaseModel
 from strictyaml import YAML, load
 
-import container.anomayl_model
+import container.model_package.anomaly_model as anomaly_model
 
 # Project Directories
 PACKAGE_ROOT = Path(anomaly_model.__file__).resolve().parent

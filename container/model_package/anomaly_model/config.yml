@@ -1,0 +1,35 @@
+# Package Overview
+package_name: model_package
+
+# Data Files
+training_data_file: train.csv
+test_data_file: test.csv
+
+# Variables
+# The variable we are attempting to predict (anomaly)
+target: Anomaly
+
+pipeline_name: model_package
+pipeline_save_file: anomaly_model_output_v
+
+# Some can cause syntax errors if they begin with numbers
+variables_to_rename:
+
+features:
+
+
+# set train/test split
+test_size: 0.1
+
+# to set the random seed
+random_state: 0
+
+alpha: 0.001
+
+# categorical variables with NA in train set
+
+# variables to log transform
+
+# variables to map
+
+# variable mappings

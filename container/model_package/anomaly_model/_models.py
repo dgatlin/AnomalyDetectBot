@@ -11,8 +11,6 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
 
-prefix = "../ml/"
-
 
 class AnomalyModel:
     def __init__(self):

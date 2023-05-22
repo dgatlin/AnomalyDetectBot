@@ -2,13 +2,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 
-from container.anomaly_model.anomaly_model.config.core import config
+from container.model_package.anomaly_model.config.core import config
 
 anomaly_pipe = Pipeline(
     [
         # ===== IMPUTATION =====
-        # impute categorical variables with string missing
+        # impute variables with string missing
         (
+            # todo add the function
             "missing_imputation",
             CategoricalImputer(
                 imputation_method="missing",
@@ -16,6 +17,7 @@ anomaly_pipe = Pipeline(
             ),
         ),
         (
+            # todo add the function
             "mean_imputation",
             MeanMedianImputer(
                 imputation_method="mean",
