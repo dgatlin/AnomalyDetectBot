@@ -1,12 +1,27 @@
-from typing import List, Optional, Tuple
+# todo - add file description and docstring
+"""
+Machine learning module for Python
+==================================
 
-import numpy as np
+FastAPI application for serving machine learning models.
+
+** Explain the purpose of the module in the ML
+   deployment Pipeline **
+
+** Explain how this module fits in the system architecture **
+
+"""
+
+# todo - update this to use the config file
+
+from typing import List, Optional, Tuple
 import pandas as pd
 from pydantic import BaseModel, ValidationError
 
-from container.model_package import config
+from container.model_package.anomaly_model import config
 
 
+# todo - add a test for this function
 def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:
     """Check model inputs for na values and filter."""
     validated_data = input_data.copy()
@@ -24,6 +39,7 @@ def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:
     return validated_data
 
 
+# todo - add a test for this function
 def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional[dict]]:
     """Check model inputs for unprocessable values."""
 

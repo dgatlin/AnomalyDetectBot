@@ -1,3 +1,17 @@
+# todo - add file description and docstring
+"""
+Machine learning module for Python
+==================================
+
+FastAPI application for serving machine learning models.
+
+** Explain the purpose of the module in the ML
+   deployment Pipeline **
+
+** Explain how this module fits in the system architecture **
+
+"""
+
 import typing as t
 from pathlib import Path
 
@@ -5,14 +19,14 @@ import joblib
 import pandas as pd
 from sklearn.pipeline import Pipeline
 
-from container.model_package import __version__ as _version
+# from container.model_package import __version__ as _version
 from container.model_package.anomaly_model.config.core import (
     DATASET_DIR,
     TRAINED_MODEL_DIR,
     config,
 )
 
-
+# todo - add a test for this function
 def load_dataset(*, file_name: str) -> pd.DataFrame:
     dataframe = pd.read_csv(Path(f"{DATASET_DIR}/{file_name}"))
     dataframe["MSSubClass"] = dataframe["MSSubClass"].astype("O")
@@ -22,6 +36,7 @@ def load_dataset(*, file_name: str) -> pd.DataFrame:
     return transformed
 
 
+# todo - add a test for this function
 def save_pipeline(*, pipeline_to_persist: Pipeline) -> None:
     """Persist the pipeline.
     Saves the versioned model, and overwrites any previous
@@ -31,13 +46,14 @@ def save_pipeline(*, pipeline_to_persist: Pipeline) -> None:
     """
 
     # Prepare versioned save file name
-    save_file_name = f"{config.app_config.pipeline_save_file}{_version}.pkl"
+    save_file_name = f"{config.app_config.pipeline_save_file}{'_version'}.pkl"
     save_path = TRAINED_MODEL_DIR / save_file_name
 
     remove_old_pipelines(files_to_keep=[save_file_name])
     joblib.dump(pipeline_to_persist, save_path)
 
 
+# todo - add a test for this function
 def load_pipeline(*, file_name: str) -> Pipeline:
     """Load a persisted pipeline."""
 
@@ -46,6 +62,7 @@ def load_pipeline(*, file_name: str) -> Pipeline:
     return trained_model
 
 
+# todo - add a test for this function
 def remove_old_pipelines(*, files_to_keep: t.List[str]) -> None:
     """
     Remove old model pipelines.

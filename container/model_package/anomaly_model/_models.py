@@ -1,77 +1,91 @@
-# ********************************************************************************
-# The actual implementation of the machine learning algorithm within its own
-# Python package. This allows me to compartmentalize the logic of the model
-# with the logic needed to run it in SageMaker, and to modify and test each
-# part independently. Then, the model can be reused in other environments as well.
-# *********************************************************************************
+# todo - add file description and docstring
+"""
+Machine learning module for Python
+==================================
+
+ The actual implementation of the machine learning algorithm within its own
+ Python package. This allows me to compartmentalize the logic of the model
+ with the logic needed to run it in SageMaker, and to modify and test each
+ part independently. Then, the model can be reused in other environments as well.
+
+
+"""
+
 
 from sklearn.model_selection import cross_val_score, GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
+import typing as t
+
+
+# from container.model_package.anomaly_model import __version__ as _version
+from container.model_package.anomaly_model.config.core import config
+from container.model_package.anomaly_model.processing.data_manager import load_pipeline
+from container.model_package.anomaly_model.processing.validation import validate_inputs
+from container.model_package.anomaly_model.processing.data_manager import (
+    load_dataset,
+    save_pipeline,
+)
+
+# pipeline_file_name = f"{config.app_config.pipeline_save_file}{'_version'}.pkl"
+# _anomaly_pipe = load_pipeline(file_name=pipeline_file_name)
 
 
 class AnomalyModel:
     def __init__(self):
-        self.clear_state()
-        # self.set_model_paths(benign_path, anomaly_path, model_path)
+        model_name = "test"
 
-    def clear_state(self):
-        """
-        Resets object's state to clear out all model internals created after loading state from disk
-        """
-        self.cls = None
-        self.modeldata = None
-        self.features = {}
+    # todo - add a test for this function
+    def run_training(self) -> None:
+        """Train the model."""
 
-    def set_model_paths(self, benign_path, anomaly_path, model_path):
-        """
-        :param benign_path:
-        :param anomaly_path:
-        :param model_path:
-        :return:
-        """
-        self.benign_path = benign_path
-        self.anomaly_path = anomaly_path
-        self.model_path = model_path
+        # read training data
+        data = load_dataset(file_name=config.app_config.training_data_file)
 
-    def build_models(self, X_train, y_train):
-        """
-        This function builds the models based on
-        the classifier matrix and labels.
-        :return:
-        """
-
-        grid = {
-            "n_estimators": [200, 300, 400, 500],
-            "max_features": ["sqrt", "log2"],
-            "max_depth": [4, 5, 6, 7, 8],
-            "criterion": ["gini", "entropy"],
-            "random_state": [18],
-        }
-
-        self.rf_cv = GridSearchCV(
-            estimator=RandomForestClassifier(), param_grid=grid, cv=3
+        # divide train and test
+        X_train, X_test, y_train, y_test = train_test_split(
+            data[config.model_config.features],  # predictors
+            data[config.model_config.target],
+            test_size=config.model_config.test_size,
+            # we are setting the random seed here
+            # for reproducibility
+            random_state=config.model_config.random_state,
         )
-        self.rf_cv.fit(X_train, y_train)
+        y_train = np.log(y_train)
 
-        # Hyper
-        n_estimators = self.rf_cv.best_params_["n_estimators"]
-        max_depth = self.rf_cv.best_params_["max_depth"]
-        max_features = self.rf_cv.best_params_["max_features"]
-        random_state = self.rf_cv.best_params_["random_state"]
-        criterion = self.rf_cv.best_params_["criterion"]
+        # fit model
+        # _anomaly_pipe.fit(X_train, y_train)
 
-        self.rf2 = RandomForestClassifier(
-            n_estimators=n_estimators,
-            max_depth=max_depth,
-            max_features=max_features,
-            random_state=random_state,
-            criterion=criterion,
-        ).fit(X_train, y_train)
+        # persist trained model
+        # save_pipeline(pipeline_to_persist=_anomaly_pipe)
 
         return self
+
+    # todo - add a test for this function
+    def make_prediction(
+        self,
+        *,
+        input_data: t.Union[pd.DataFrame, dict],
+    ) -> dict:
+        """Make a prediction using a saved model pipeline."""
+
+        data = pd.DataFrame(input_data)
+        validated_data, errors = validate_inputs(input_data=data)
+        results = {"predictions": None, "version": "_version", "errors": errors}
+
+        if not errors:
+            predictions = _anomaly_pipe.predict(
+                X=validated_data[config.model_config.features]
+            )
+            results = {
+                "predictions": [np.exp(pred) for pred in predictions],  # type: ignore
+                "version": "_version",
+                "errors": errors,
+            }
+
+        return results
 
     def adb_evaluate_model(self):
         """
@@ -98,18 +112,3 @@ class AnomalyModel:
             "precision": precision,
             "recall": recall,
         }
-
-    # def adb_save_mode(self):
-
-    def adb_predict(self, X):
-
-        if not isinstance(X, pd.DataFrame):
-            raise TypeError("sample_input must be pandas DataFrame")
-        if len(X) <= 0:
-            return pd.DataFrame()
-
-        if X is not None and len(X) > 0:
-            complete_result = self.cls.predict(X)
-            return complete_result
-        else:
-            raise ValueError("Unexpected error occurred.")

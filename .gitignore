@@ -1,11 +1,16 @@
 .idea/
 
 .cpython-310.pyc
-container/anomaly_model/anomaly_model/__pycache__/
-container/anomaly_model/__pycache__/__init__.cpython-310.pyc
+/__pycache__/
+/__pycache__/__init__.cpython-310.pyc
 
 terraform/infrastructure/.terraform/.terraform.lock.hcl
 terraform/infrastructure/terraform.tfstate
 terraform/infrastructure/terraform.tfstate.backup
 terraform/infrastructure/.terraform
 terraform/infrastructure/provider.tf
+__pycache__/
+.pyc
+.cpython-310.pyc
+/_models.cpython-310.pyc
+/__pycache__/_models.cpython-310.pyc

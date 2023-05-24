@@ -1,3 +1,4 @@
+# todo - add file description and docstring
 # Package Overview
 package_name: model_package
 
@@ -11,6 +12,8 @@ target: Anomaly
 
 pipeline_name: model_package
 pipeline_save_file: anomaly_model_output_v
+
+# SageMaker Variables
 
 # Some can cause syntax errors if they begin with numbers
 variables_to_rename:

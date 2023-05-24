@@ -1,4 +1,19 @@
 # https://sagemaker.readthedocs.io/en/stable/frameworks/sklearn/using_sklearn.html?swcfpc=1
+# todo - add file description and docstring
+"""
+Machine learning module for Python
+==================================
+
+FastAPI application for serving machine learning models.
+
+** Explain the purpose of the module in the ML
+   deployment Pipeline **
+
+** Explain how this module fits in the system architecture **
+
+"""
+
+# todo - convert to sagemaker pipeline
 
 import argparse
 import os
@@ -6,7 +21,13 @@ import pandas as pd
 import numpy as np
 from container.model_package import anomaly_model
 
-path1 = "/Users/dariusmac/PycharmProjects/AnomalyDetectBot/data/MalwareArtifacts.csv"
+from container.model_package.anomaly_model.config.core import (
+    DATASET_DIR,
+    TRAINED_MODEL_DIR,
+    config,
+)
+
+path1 = DATASET_DIR + "/train.csv"
 
 if __name__ == "__main__":
 

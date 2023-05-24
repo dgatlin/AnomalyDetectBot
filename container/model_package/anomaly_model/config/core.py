@@ -1,3 +1,17 @@
+# todo - add file description and docstring
+"""
+Machine learning module for Python
+==================================
+
+FastAPI application for serving machine learning models.
+
+** Explain the purpose of the module in the ML
+   deployment Pipeline **
+
+** Explain how this module fits in the system architecture **
+
+"""
+
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence
 
@@ -22,6 +36,7 @@ class AppConfig(BaseModel):
     package_name: str
     training_data_file: str
     test_data_file: str
+    pipeline_save_file: str
 
 
 class ModelConfig(BaseModel):
@@ -58,6 +73,7 @@ def fetch_config_from_yaml(cfg_path: Optional[Path] = None) -> YAML:
     raise OSError(f"Did not find config file at path: {cfg_path}")
 
 
+# todo - add a test for this function
 def create_and_validate_config(parsed_config: YAML = None) -> Config:
     """Run validation on config values."""
     if parsed_config is None:
