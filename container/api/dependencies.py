@@ -12,7 +12,7 @@ FastAPI application for serving machine learning models.
 
 """
 
-from typing import Annotated
+from typing import Annotated, Optional
 
 from fastapi import Header, HTTPException
 

@@ -12,7 +12,6 @@ FastAPI application for serving machine learning models.
 
 """
 
-# todo - update this to use the config file
 
 from typing import List, Optional, Tuple
 import pandas as pd
@@ -21,7 +20,6 @@ from pydantic import BaseModel, ValidationError
 from container.model_package.anomaly_model.config.core import config
 
 
-# todo - add a test for this function
 def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:
     """Check model inputs for na values and filter."""
     validated_data = input_data.copy()
@@ -30,7 +28,6 @@ def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:
     return validated_data
 
 
-# todo - add a test for this function
 def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional[dict]]:
     """Check model inputs for unprocessable values."""
 
@@ -48,7 +45,3 @@ def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional
         errors = error.json()
 
     return validated_data, errors
-
-
-class AnomalyDataInputSchema(BaseModel):
-    None

@@ -1,10 +1,5 @@
-import typing as t
-
 import pandas as pd
-import numpy as np
-
 from container.model_package.anomaly_model.config.core import config
-from container.model_package.anomaly_model.pipeline import anomaly_pipe
 from container.model_package.anomaly_model.processing.data_manager import load_pipeline
 from container.model_package.anomaly_model.processing.validation import validate_inputs
 
@@ -13,7 +8,7 @@ _anom_pipe = load_pipeline(file_name=pipeline_file_name)
 
 
 # todo - add a test for this function
-def make_prediction(self, *, input_data) -> dict:
+def make_prediction(*, input_data) -> dict:
     """Make a prediction using a saved model pipeline."""
 
     data = pd.DataFrame(input_data)

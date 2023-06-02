@@ -15,14 +15,6 @@ FastAPI application for serving machine learning models.
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.decomposition import PCA
-from feature_engine.imputation import (
-    AddMissingIndicator,
-    CategoricalImputer,
-    MeanMedianImputer,
-)
-
-from container.model_package.anomaly_model.config.core import config
 
 # todo - add a test for this function
 anomaly_pipe = Pipeline(

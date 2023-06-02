@@ -27,7 +27,7 @@ class AnomalyModel:
         self.pipeline = load_pipeline(file_name=model_name)
 
     def predict(self, input_data: pd.DataFrame):
-        self.results = make_prediction(self, input_data=input_data)
+        self.results = make_prediction(input_data=input_data)
         return self.results
 
     def adb_evaluate_model(self):

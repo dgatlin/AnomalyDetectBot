@@ -11,23 +11,14 @@ FastAPI application for serving machine learning models.
 ** Explain how this module fits in the system architecture **
 
 """
-
+import json
 import logging
 import pandas as pd
-from fastapi import FastAPI, Request
 import uvicorn
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-from container.api.dependencies import get_query_token, get_token_header
-from container.api.internal import admin
-from container.api.routers import hyperparameters, predictions
 from container.model_package import anomaly_model
-
-from container.model_package.anomaly_model.config.core import (
-    DATASET_DIR,
-    TRAINED_MODEL_DIR,
-    config,
-)
 
 ## API INSTANTIATION WITH OBJECTS
 ## ----------------------------------------------------------------
@@ -36,6 +27,7 @@ amb = anomaly_model.AnomalyModel()
 
 # Instantiating FastAPI
 app = FastAPI()
+
 
 ## API INSTANTIATION WITH FUNCTIONS
 # app = FastAPI(dependencies=[Depends(get_query_token)])
@@ -68,8 +60,21 @@ def load_model():
     return classifier
 
 
+class Item(BaseModel):
+    one: float
+    two: float
+    three: float
+
+
+class obs(BaseModel):
+    obs: list[Item]
+
+
+l = {"one": 1, "two": 2, "three": 3}
+
+
 @app.post("/predict")
-async def basic_predict(input_data: list):
+async def basic_predict(input_data: list[dict]):
 
     # Converting dict to pandas dataframe
     input_df = pd.DataFrame(input_data)
