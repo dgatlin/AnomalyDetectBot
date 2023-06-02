@@ -1,4 +1,3 @@
-# todo - add file description and docstring
 # Package Overview
 package_name: model_package
 
@@ -8,31 +7,30 @@ test_data_file: test.csv
 
 # Variables
 # The variable we are attempting to predict (anomaly)
-target: Anomaly
+target: target
 
 pipeline_name: model_package
 pipeline_save_file: anomaly_model_output_v
+pipeline_file_name: anomaly_model_output_v_version.pkl
 
 # SageMaker Variables
 
-# Some can cause syntax errors if they begin with numbers
-variables_to_rename:
-
 features:
-
+  - one
+  - two
+  - three
 
 # set train/test split
 test_size: 0.1
 
 # to set the random seed
-random_state: 0
+random_seed: 0
 
 alpha: 0.001
 
-# categorical variables with NA in train set
+# PCA hyperparameters
+pca_components: .99
+pca_random_state: 0
 
-# variables to log transform
 
-# variables to map
-
-# variable mappings
+# IsoForest hyperparameters

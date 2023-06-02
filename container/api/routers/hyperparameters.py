@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 
-fake_items_db = {"plumbus": {"name": "Plumbus"}, "gun": {"name": "Portal Gun"}}
+fake_items_db = {"one": {"name": "two"}, "three": {"name": "three"}}
 
 
 @router.get("/")

@@ -12,13 +12,9 @@ FastAPI application for serving machine learning models.
 
 """
 
-
 import logging
-import os
 import pandas as pd
-import pickle
 from fastapi import FastAPI, Request
-from pydantic import BaseModel
 import uvicorn
 from fastapi import Depends, FastAPI
 
@@ -36,28 +32,23 @@ from container.model_package.anomaly_model.config.core import (
 ## API INSTANTIATION WITH OBJECTS
 ## ----------------------------------------------------------------
 
-adb = anomaly_model.AnomalyModel()
+amb = anomaly_model.AnomalyModel()
 
 # Instantiating FastAPI
 app = FastAPI()
 
+## API INSTANTIATION WITH FUNCTIONS
+# app = FastAPI(dependencies=[Depends(get_query_token)])
 
-## API ENDPOINTS
-## ----------------------------------------------------------------
-
-
-app = FastAPI(dependencies=[Depends(get_query_token)])
-
-
-app.include_router(hyperparameters.router)
-app.include_router(predictions.router)
-app.include_router(
-    admin.router,
-    prefix="/admin",
-    tags=["admin"],
-    dependencies=[Depends(get_token_header)],
-    responses={418: {"description": "I'm an AI/ML System"}},
-)
+# app.include_router(hyperparameters.router)
+# app.include_router(predictions.router)
+# app.include_router(
+#    admin.router,
+#    prefix="/admin",
+#    tags=["admin"],
+#    dependencies=[Depends(get_token_header)],
+#    responses={418: {"description": "I'm an AI/ML System"}},
+# )
 
 
 @app.get("/")
@@ -72,33 +63,21 @@ async def ping():
 
 @app.on_event("startup")
 def load_model():
-    classifier = "pipeline('anomaly', model=MODElS_PATH)"
+    classifier = "anomaly_model.AnomalyModel()"
     logging.info("Model loaded.")
     return classifier
 
 
-@app.post("/invocations")
-def invocations(request: Request):
-    json_payload = "await request.json()"
+@app.post("/predict")
+async def basic_predict(input_data: list):
 
-    # inputs = [records["scope"] for records in json_payload]
-    # output = [{"prediction": classifier(input)} for input in inputs]
-    return "output"
+    # Converting dict to pandas dataframe
+    input_df = pd.DataFrame(input_data)
 
+    # Getting the prediction
+    pred = amb.predict(input_df)
 
-# Defining the prediction endpoint without data validation
-@app.post("/basic_predict")
-async def basic_predict(request: Request):
-    # Getting the JSON from the body of the request
-    input_data = await request.json()
-
-    # Converting JSON to Pandas DataFrame
-    input_df = pd.DataFrame([input_data])
-
-    # Getting the prediction from the Logistic Regression model
-    # pred = lr_model.predict(input_df)[0]
-
-    return "pred"
+    return pred
 
 
 if __name__ == "__main__":

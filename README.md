@@ -13,6 +13,8 @@
 
 ### FastAPI
 * FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.
+![My Image](./data/img/fastapi.png)
+
 
 ### Docker
 * Docker is a set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.

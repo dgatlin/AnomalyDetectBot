@@ -37,6 +37,7 @@ class AppConfig(BaseModel):
     training_data_file: str
     test_data_file: str
     pipeline_save_file: str
+    pipeline_file_name: str
 
 
 class ModelConfig(BaseModel):
@@ -44,6 +45,15 @@ class ModelConfig(BaseModel):
     All configuration relevant to model
     training and feature engineering.
     """
+
+    # PCA parameters
+    pca_components: float
+    pca_random_state: int
+
+    features: List[str]
+    target: str
+    test_size: float
+    random_seed: int
 
 
 class Config(BaseModel):
