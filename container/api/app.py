@@ -72,6 +72,8 @@ class obs(BaseModel):
 
 l = {"one": 1, "two": 2, "three": 3}
 
+l2 = {"one": 20, "two": 12.66645094909174, "three": 15.8990837351338}
+
 
 @app.post("/predict")
 async def basic_predict(input_data: list[dict]):

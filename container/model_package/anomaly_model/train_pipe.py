@@ -1,5 +1,4 @@
 # todo - add a test for this function
-import numpy as np
 from sklearn.model_selection import train_test_split
 
 from container.model_package import config
