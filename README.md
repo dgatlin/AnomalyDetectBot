@@ -1,6 +1,9 @@
 # Machine Learning System Architecture
 ![My Image](./data/img/chart.png)
 
+
+
+
 ## Table of Contents
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
@@ -47,9 +50,6 @@ Install the requirements/dependencies listed requirements.txt
 
 
 ## Usage
-How does one go about using it?
-
-Provide various use cases and code examples here.
 
 ````python
 import logging
@@ -86,6 +86,8 @@ async def basic_predict(input_data: list[dict]):
     return pred
 ````
 
+
+
 ### Run it
 
 Run the server with:
@@ -103,6 +105,8 @@ INFO:     Application startup complete.
 ```
 
 </div>
+
+
 
 
 ### Prediction Example
@@ -127,6 +131,8 @@ You will see the JSON response as:
 - The prediction is 1, which means that the data point is an anomaly.
 
 
+
+
 ### Interactive API docs
 
 Now go to <a href="http://127.0.0.1:8000/docs" class="external-link" target="_blank">http://127.0.0.1:8000/docs
@@ -134,8 +140,13 @@ Now go to <a href="http://127.0.0.1:8000/docs" class="external-link" target="_bl
 You will see the automatic interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a>):
 ![My Image](./data/img/fastapi.png)
 
+
+
+
 ## Project Status
 Project is: _in progress_
+
+
 
 
 ## Room for Improvement
@@ -152,6 +163,9 @@ To do:
 - Integrate CI/CD pipeline for the model deployment
 - Finalize the model monitoring and retraining pipeline
 - Integrate the model monitoring and retraining pipeline to the CI/CD pipeline
+
+
+
 
 ## Literature of ML System Architecture
 * [The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction (Google)](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/aad9f93b86b7addfea4c419b9100c6cdd26cacea.pdf)
