@@ -14,6 +14,7 @@ FastAPI application for serving machine learning models.
 
 
 from typing import List, Optional, Tuple
+
 import pandas as pd
 from pydantic import BaseModel, ValidationError
 

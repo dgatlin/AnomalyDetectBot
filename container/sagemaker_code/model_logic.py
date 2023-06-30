@@ -17,10 +17,11 @@ FastAPI application for serving machine learning models.
 
 import argparse
 import os
-import pandas as pd
-import numpy as np
-from container.model_package import anomaly_model
 
+import numpy as np
+import pandas as pd
+
+from container.model_package import anomaly_model
 from container.model_package.anomaly_model.config.core import (
     DATASET_DIR,
     TRAINED_MODEL_DIR,
@@ -30,7 +31,6 @@ from container.model_package.anomaly_model.config.core import (
 path1 = DATASET_DIR + "/train.csv"
 
 if __name__ == "__main__":
-
     print("initializing")
     parser = argparse.ArgumentParser()
     adb = anomaly_model.AnomalyModel()

@@ -1,5 +1,7 @@
 import unittest
+
 import pandas as pd
+
 from container.model_package.anomaly_model.processing.validation import (
     drop_na_inputs,
     validate_inputs,

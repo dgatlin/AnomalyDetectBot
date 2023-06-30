@@ -13,6 +13,7 @@ FastAPI application for serving machine learning models.
 """
 import json
 import logging
+
 import pandas as pd
 import uvicorn
 from fastapi import FastAPI
@@ -77,7 +78,6 @@ l2 = {"one": 20, "two": 12.66645094909174, "three": 15.8990837351338}
 
 @app.post("/predict")
 async def basic_predict(input_data: list[dict]):
-
     # Converting dict to pandas dataframe
     input_df = pd.DataFrame(input_data)
 

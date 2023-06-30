@@ -1,6 +1,7 @@
 import unittest
-from container.model_package.anomaly_model.processing.data_manager import load_pipeline
+
 from container.model_package.anomaly_model.predict_pipe import make_prediction
+from container.model_package.anomaly_model.processing.data_manager import load_pipeline
 
 
 class TestYourModule(unittest.TestCase):

@@ -1,4 +1,3 @@
-# todo - add file description and docstring
 """
 Machine learning module for Python
 ==================================
@@ -8,16 +7,14 @@ Machine learning module for Python
  with the logic needed to run it in SageMaker, and to modify and test each
  part independently. Then, the model can be reused in other environments as well.
 
-
 """
-import pandas as pd
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
 import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score, train_test_split
 
-from container.model_package.anomaly_model.processing.data_manager import load_pipeline
 from container.model_package.anomaly_model.predict_pipe import make_prediction
+from container.model_package.anomaly_model.processing.data_manager import load_pipeline
 
 
 class AnomalyModel:
